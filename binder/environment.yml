@@ -1,5 +1,6 @@
 channels:
   - conda-forge
+  - conda-forge/label/prerelease-jupyterlab
 dependencies:
 #   - jupyter-offlinenotebook  
   - pip: 
