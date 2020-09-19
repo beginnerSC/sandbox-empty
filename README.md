@@ -1,4 +1,4 @@
-# Clean JupyterLab Workspace
+# Clean JupyterLab Workspace in the Cloud
 
 Click on the below link to launch: 
 
