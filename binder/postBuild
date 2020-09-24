@@ -1,2 +1,11 @@
 python -m bash_kernel.install
-echo '############ HI #############' >> .bashrc
+
+echo '\n# git add commit and push in one command \n' >> .bashrc
+
+echo 'function cnp() {                                                                    \n' >> .bashrc
+echo '    git add *                                                                       \n' >> .bashrc
+echo '    git config --global user.name "beginnerSC"                                      \n' >> .bashrc
+echo '    git config --global user.email "25188222+beginnerSC@users.noreply.github.com"   \n' >> .bashrc
+echo '    git commit -a -m "update"                                                       \n' >> .bashrc
+echo '    git push                                                                        \n' >> .bashrc
+echo '}                                                                                   \n' >> .bashrc
