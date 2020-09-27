@@ -1,4 +1,6 @@
 python -m bash_kernel.install
+jupyter contrib nbextension install --user
+jupyter nbextension enable equation-numbering/main
 
 echo '\n# git add commit and push in one command \n' >> .bashrc
 
