@@ -33,7 +33,7 @@ RUN apt-get clean && apt-get update && apt-get install -y \
 # ADD ./packages/xindy-2.2-rc2-linux.tar.gz /opt
 # ENV PATH="/opt/xindy-2.2/bin:${PATH}"
 
-COPY ./util/docker-entrypoint.sh /
+# COPY ./util/docker-entrypoint.sh /
 
-EXPOSE 2700
-CMD ["./docker-entrypoint.sh"]
+# EXPOSE 2700
+# CMD ["./docker-entrypoint.sh"]
