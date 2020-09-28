@@ -2,7 +2,7 @@ channels:
   - conda-forge
 dependencies:
 #   - jupyter-offlinenotebook  
-  - jupyter_contrib_nbextensions
+#  - jupyter_contrib_nbextensions
   - texlive-core
   - pip
   - pip: 
