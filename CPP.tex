@@ -1,0 +1,2290 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+    \usepackage{iftex}
+    \ifPDFTeX
+    	\usepackage[T1]{fontenc}
+    	\usepackage{mathpazo}
+    \else
+    	\usepackage{fontspec}
+    \fi
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range
+    \makeatletter % fix for grffile with XeLaTeX
+    \def\Gread@@xetex#1{%
+      \IfFileExists{"\Gin@base".bb}%
+      {\Gread@eps{\Gin@base.bb}}%
+      {\Gread@@xetex@aux#1}%
+    }
+    \makeatother
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{CPP}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{notes-on-the-cherno-c-videos}{%
+\subsection{\texorpdfstring{Notes on
+\href{https://www.youtube.com/playlist?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb}{The
+Cherno C++
+Videos}}{Notes on The Cherno C++ Videos}}\label{notes-on-the-cherno-c-videos}}
+
+\hypertarget{welcome-to-c}{%
+\subsubsection{1. Welcome to C++}\label{welcome-to-c}}
+
+\hypertarget{how-to-setup-c-on-windows}{%
+\subsubsection{2. How to Setup C++ on
+Windows}\label{how-to-setup-c-on-windows}}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://youtu.be/1OsGXuNA5cc?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&t=259}{The
+  Cherno's VS Settings}
+\end{itemize}
+
+\hypertarget{how-to-setup-c-on-mac}{%
+\subsubsection{3. How to Setup C++ on Mac}\label{how-to-setup-c-on-mac}}
+
+\hypertarget{how-to-setup-c-on-linux}{%
+\subsubsection{4. How to Setup C++ on
+Linux}\label{how-to-setup-c-on-linux}}
+
+\hypertarget{how-c-works}{%
+\subsubsection{\texorpdfstring{5.
+\href{https://www.youtube.com/watch?v=SfGuIVzE_Os\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=5}{How
+C++ Works}}{5. How C++ Works}}\label{how-c-works}}
+
+\begin{itemize}
+\tightlist
+\item
+  int main() 可以不用 return 0 。只有 main() 可以這樣
+\item
+  \textless\textless{} operator 也是一個函數
+\item
+  一個 cpp 檔裡只要所有用到的變數函數都找的到宣告，compiler
+  就相信它存在，實際定義在哪是 linker 要負責找到。
+\item
+  在同一個 cpp file 裡只要所有函數變數都找的宣告就可以編譯。不需要另外
+  include
+\item
+  把 text 編譯成 binary file 的三個步驟：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    preprocess: h -\textgreater{} cpp
+  \item
+    compile: cpp -\textgreater{} obj
+  \item
+    link: obj files -\textgreater{} exe
+  \end{itemize}
+\item
+  platform \& configuration ：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    platform 如 x86 是 target platform（x86==win32）
+  \item
+    configuration 如 Debug/Release 是 build config
+  \item
+    檢查跟 property 裡的一樣。VS 有時候會弄錯
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{how-the-c-compiler-works}{%
+\subsubsection{\texorpdfstring{6.
+\href{https://www.youtube.com/watch?v=3tIqpEmWMLI\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=7\&t=0s}{How
+the C++ Compiler
+Works}}{6. How the C++ Compiler Works}}\label{how-the-c-compiler-works}}
+
+\begin{itemize}
+\tightlist
+\item
+  preprocessor 只負責複製貼上。把 \texttt{\}} 改成
+  \texttt{\#include\ "EndBrace.h"} 結果是一樣的
+\item
+  *.i file 是 preprocess 過的 cpp file
+\item
+  compile 是 compile cpp files individually 的意思，在 windows
+  裡編譯完得 obj 檔被 VS 丟到 /Debug 裡
+\item
+  C++ 沒有 file 的概念，只有 translation unit ：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    用 include 把 a.cpp 貼到 b.cpp，再把 b.cpp 貼到 c.cpp，最後只編譯
+    c.cpp，這樣就只有一個很大的 translation unit
+  \end{itemize}
+\item
+  compile 得到的 obj file 是 binary。要得到可讀的 assembly code 可以在
+  VS 改：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Porperty -\textgreater{} C/C++ -\textgreater{} Output Files
+    -\textgreater{} Assumbler Output 改成 Assembling only listing
+  \item
+    改好之後重新編譯，除了 obj 還會得到 asm file 是可讀的
+  \end{itemize}
+\item
+  O2 編譯是優化速度。還可以優化別的：
+  \texttt{int\ f(int\ a,\ int\ b)\ \ \ \ \ \{\ \ \ \ \ \ \ \ \ int\ c\ =\ a*b;\ \ \ \ \ \ \ \ \ return\ c;\ \ \ \ \ \}}
+  這裡 O2 會編成 \texttt{return\ a*b}，在 assembly 省下一個 mov
+\item
+  因為 O2 不是一行一行編譯所以沒辦法 debug
+\item
+  Constant Folding：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{return\ 5*2;} 會直接編譯成 \texttt{return\ 10;} 就算在 debug
+    mode 也一樣
+  \item
+    所有編譯時期能決定的 constant 就會直接算出結果放在 assembly
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{how-the-c-linker-works}{%
+\subsubsection{\texorpdfstring{7.
+\href{https://www.youtube.com/watch?v=H4s55GgAg0I\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=7}{How
+the C++ Linker
+Works}}{7. How the C++ Linker Works}}\label{how-the-c-linker-works}}
+
+\begin{itemize}
+\tightlist
+\item
+  一個函數只要在某個檔案定義過了 linker 就找的到，和 include
+  無關，include 只需要 include 宣告
+\item
+  linker 找的是 function signature
+\item
+  一個程式的 entry point 不一定就是 main function，雖然大部份時候都是
+\item
+  分清楚 error 是 compiling（error code C 開頭）還是 linking error（LNK
+  開頭）
+\item
+  兩種常見 linking error：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    unresolved external symbol：有變數或函數找不到定義
+  \item
+    one or more multiple defined symbols
+    found：有變數或函數重覆定義，有可能是 preprocessor
+    貼兩次的結果，solution：
+
+    \begin{itemize}
+    \tightlist
+    \item
+      把函數宣告成 static，只有那個 translation unit 看的到
+    \item
+      宣告成 inline
+    \item
+      不要把函數定義在 h 檔裡，定義在 cpp 檔，自成一個 translation unit
+    \item
+      \href{https://youtu.be/f3FVU-iwNuA?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&t=150}{除了第一次定義之外，其它都用
+      extern，如 \texttt{extern\ int\ a;}}
+    \end{itemize}
+  \end{itemize}
+\item
+  linker 也用來 link 其它 library 如 STL，platform API
+\item
+  linking 有分 static 和 dynamic
+\end{itemize}
+
+\hypertarget{variables-in-c}{%
+\subsubsection{\texorpdfstring{8.
+\href{https://www.youtube.com/watch?v=zB9RI8_wExo\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=8}{Variables
+in C++}}{8. Variables in C++}}\label{variables-in-c}}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Type & Size (Bytes)\tabularnewline
+\midrule
+\endhead
+bool & 1\tabularnewline
+char & 1\tabularnewline
+short & 2\tabularnewline
+int & 4\tabularnewline
+long & 4*\tabularnewline
+long long & 4*\tabularnewline
+float & 4\tabularnewline
+double & 8\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  * 代表 compiler dependent
+\item
+  可以用 sizeof 來查
+\item
+  C++ 所有 primitive type 其實都是數字，差別只在暫記憶體空間大小
+\item
+  bool 其實只需要一個 bit，可是 memory 都是以 byte 為單位讀，所以就用 1
+  byte 來存
+\item
+  float 宣告會自動變成 double 除非宣告成這樣 \texttt{float\ a\ =\ 5.5f;}
+\end{itemize}
+
+\hypertarget{functions-in-c}{%
+\subsubsection{\texorpdfstring{9.
+\href{https://www.youtube.com/watch?v=V9zuox47zr0\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=9}{Functions
+in C++}}{9. Functions in C++}}\label{functions-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  常常複製貼上一段 code 之後忘了改一些細節。如果一段 code
+  會被複製貼上很多次就該包成函數
+\item
+  練習把 code 拆成很多很多函數
+\item
+  但不要 over do it 因為有 context switch overhead 會變慢。function 的
+  assembly code 在 binary 的其它位置
+\end{itemize}
+
+\hypertarget{c-header-files}{%
+\subsubsection{\texorpdfstring{10.
+\href{https://www.youtube.com/watch?v=9RJTQmK0YPI\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=10}{C++
+Header Files}}{10. C++ Header Files}}\label{c-header-files}}
+
+\begin{itemize}
+\tightlist
+\item
+  如果沒有 header file，每一個 translation unit
+  都要把自己用到的所有函數重新宣告一次。有 header file 就可以用 include
+  的就好
+\item
+  在一個 header file 的最前面放 \texttt{\#pragma\ once} 可以避免這個
+  header file
+  \href{https://en.wikipedia.org/wiki/Pragma_once\#Example}{被重覆
+  include}，效果同把整個 header file 的內容包在 ifndef 裡：
+  \texttt{\#ifndef\ \_LOG\_H\_\ \ \ \ \ \#define\ \_LOG\_H\_\ \ \ \ \ \#endif}
+\item
+  現在已經差不多所有編譯器都支援 \texttt{\#pragma\ once} 了
+\item
+  \texttt{\#include\ \textless{}header\textgreater{}} 和
+  \texttt{\#include\ "header.h"} 的差別：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    編譯的時候可以指定一些 include path，用括號的 include 是從這些 path
+    中找，用雙引號的 include 是用該 cpp file 的相對位置找
+  \item
+    \texttt{\#include\ "header.h"} 代表這個 header 和 cpp 在同一個
+    folder
+  \item
+    其實雙引號也會去 include path 找所以 \texttt{\#include\ "iostream"}
+    是可以的
+  \end{itemize}
+\item
+  C++ 自帶的 header file 是沒有副檔名的，所以不能
+  \texttt{\#include\ \textless{}iostream.h\textgreater{}}，會找不到。但是
+  C 自帶的是有的，例如
+  \texttt{\#include\ \textless{}math.h\textgreater{}}
+\end{itemize}
+
+\hypertarget{how-to-debug-c-in-visual-studio}{%
+\subsubsection{11. How to DEBUG C++ in VISUAL
+STUDIO}\label{how-to-debug-c-in-visual-studio}}
+
+\hypertarget{conditions-and-branches-in-c-if-statements}{%
+\subsubsection{12. CONDITIONS and BRANCHES in C++ (if
+statements)}\label{conditions-and-branches-in-c-if-statements}}
+
+\hypertarget{best-visual-studio-setup-for-c-projects}{%
+\subsubsection{13. BEST Visual Studio Setup for C++
+Projects!}\label{best-visual-studio-setup-for-c-projects}}
+
+\hypertarget{loops-in-c-for-loops-while-loops}{%
+\subsubsection{14. Loops in C++ (for loops, while
+loops)}\label{loops-in-c-for-loops-while-loops}}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{for(i=0\ ;\ i\textless{}=4\ ;\ i++)} 會比
+  \texttt{for(i=0\ ;\ i\textless{}5\ ;\ i++)} 慢因為
+  \texttt{i\textless{}=4} 其實是兩次比較。只要情況允許應該永遠寫
+  \texttt{i\textless{}5}
+\end{itemize}
+
+\hypertarget{control-flow-in-c-continue-break-return}{%
+\subsubsection{15. Control Flow in C++ (continue, break,
+return)}\label{control-flow-in-c-continue-break-return}}
+
+\hypertarget{pointers-in-c}{%
+\subsubsection{\texorpdfstring{16.
+\href{https://www.youtube.com/watch?v=DTxHyVn0ODg\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=16}{POINTERS
+in C++}}{16. POINTERS in C++}}\label{pointers-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  不管是 \texttt{int*}, \texttt{char*}, \texttt{double*} 都一樣是整數
+\item
+  以下三個都相同：
+  \texttt{void*\ ptr\ =\ nullptr;\ \ \ \ \ void*\ ptr\ =\ NULL;\ \ \ \ \ void*\ ptr\ =\ 0;}
+\item
+  記憶體零的位置不能讀寫，如果試著去讀程式會 crash，但上面這些 statement
+  是合法的編譯可以過
+\item
+  \href{https://youtu.be/DTxHyVn0ODg?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&t=412}{VS
+  是有辦法看到 memory 裡有什麼的！}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    看到的是反的。\texttt{int\ a\ =\ 5;} 在記憶體裡會看到
+    \texttt{05\ 00\ 00\ 00}
+  \end{itemize}
+\item
+  \href{https://youtu.be/DTxHyVn0ODg?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&t=668}{還能看著
+  memory
+  debug}，\href{https://youtu.be/DTxHyVn0ODg?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&t=808}{直接打
+  pointer 的變數名稱也行}
+\item
+  \texttt{\&a}：a 的位址，\texttt{*p}：p 裡面住的人
+\item
+  cast \texttt{int*} into \texttt{double*} （反正所有 ptr 都是整數）
+  \texttt{int\ var\ =\ 8;\ \ \ \ \ double*\ ptr\ =\ (double*)\&var}
+\item
+  cstring memset 把一塊連續的記憶體設成同一個值
+  \texttt{\#\ include\ \textless{}cstring\textgreater{}\ \ \ \ \ int\ main()\ \ \ \ \ \{\ \ \ \ \ \ \ \ \ char*\ buffer\ =\ new\ char{[}8{]};\ \ \ \ \ \ \ \ \ std::memset(buffer,\ 0,\ 8);\ \ \ \ \ \ \ \ \ delete{[}{]}\ buffer;\ \ \ \ \ \}}
+\item
+  \texttt{int*\ a,\ b;}
+  \href{https://youtu.be/4fJBrditnJU?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&t=470}{這樣宣告只有
+  a 是指標}，b 還是整數。如果要兩個指標要宣告成 \texttt{int\ *a,\ *b;}
+\end{itemize}
+
+\hypertarget{references-in-c}{%
+\subsubsection{\texorpdfstring{17.
+\href{https://www.youtube.com/watch?v=IzoFn3dfsPA\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=17}{REFERENCES
+in C++}}{17. REFERENCES in C++}}\label{references-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  函數傳參考呼叫的寫法
+\item
+  宣告參考的時候一定要初始化（沒有本名哪有別名）（it's not a real
+  variable, it's a reference）
+\item
+  一旦初始化就不能改變。下面這段 code 只會把 a 的值設成 5，不會把 ref
+  變成 b 的別名
+\end{itemize}
+
+\begin{verbatim}
+int main()
+{
+    int a = 5;
+    int b = 8;
+    int& ref = a;
+    ref = b;
+}
+\end{verbatim}
+
+\hypertarget{classes-in-c}{%
+\subsubsection{18. CLASSES in C++}\label{classes-in-c}}
+
+\hypertarget{classes-vs-structs-in-c}{%
+\subsubsection{\texorpdfstring{19.
+\href{https://www.youtube.com/watch?v=fLgTtaqqJp0\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=19}{CLASSES
+vs STRUCTS in
+C++}}{19. CLASSES vs STRUCTS in C++}}\label{classes-vs-structs-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  差別真的就只有 struct 預設是 public，class 預設是 private
+\item
+  The Cherno 遇到真的只用來裝 data 的才用 struct，然後從來不繼承 struct
+\end{itemize}
+
+\hypertarget{how-to-write-a-c-class}{%
+\subsubsection{20. How to Write a C++
+Class}\label{how-to-write-a-c-class}}
+
+\hypertarget{static-in-c}{%
+\subsubsection{\texorpdfstring{21.
+\href{https://www.youtube.com/watch?v=f3FVU-iwNuA\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=22\&t=0s}{Static
+in C++}}{21. Static in C++}}\label{static-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  static 分成在 class 裡的和在 class 外的，意義不同，這裡講在 class 外的
+\item
+  external linkage：在不同 translation unit 裡重覆定義非 static
+  變數會出現 linking error。要避免這個錯誤可以定義成
+  \texttt{extern\ int\ a;} 叫 linker 去其它 translation unit 找
+\item
+  internal linkage：在一個 translation unit 的全域範圍裡的 static 只有該
+  translation unit 看的到。linker 從外部找不到，就算用 extern
+  也找不到。這個變數就像是這個 translation unit 的 private 變數
+\item
+  static 函數也一樣，只有該 translation unit
+  看的到。這樣定義：\texttt{static\ void\ Function()\{\}}
+\item
+  如果在標頭檔裡定義 static 變數然後這個標頭檔被兩個 cpp file
+  include，由於 preprocessor 只是單純的複製貼上，這相當於在兩個
+  translation unit 裡各自定義 static 變數
+\item
+  就像 class 裡的儘量把外部用不到的變數函數定義成 private
+  一樣，全域變數也應該儘量定義成 static，除非真的需要它被 linker 找到
+\end{itemize}
+
+\hypertarget{static-for-classes-and-structs-in-c}{%
+\subsubsection{\texorpdfstring{22.
+\href{https://www.youtube.com/watch?v=V-BFlMrBtqQ\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=23\&t=0s}{Static
+for Classes and Structs in
+C++}}{22. Static for Classes and Structs in C++}}\label{static-for-classes-and-structs-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  在 class 裡的 static variable 只有一個 instance。不管宣告多少這個
+  class 的 instances 都共用同一個該 variable。然後在全域要用 scope
+  resolution operator 再宣告一次
+\end{itemize}
+
+\begin{verbatim}
+class Entity
+{
+public: 
+    static int a;
+    static void Print()
+    {
+        std::cout << a << std::endl;
+    }
+};
+Entity::a;
+int main()
+{
+    Entity e; 
+    e.a;
+    e.Print();
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  上面的 \texttt{e.a} 是合法的編譯會過，但觀念正確的呼叫方式應該是
+  \texttt{Entity::a}
+\item
+  static 成員變數可以是 private，所以比全域變數更好控制權限
+\item
+  非 static 的所有 class 成員函數經過編譯其實都有一個像 python 的 self
+  把呼叫自己的物件傳進去，static
+  成員函數沒有，所以如果要存取其它成員變數，只能存取 static
+  成員變數。沒有 self 就沒辦法透過 self 物件存取裡面的變數
+\end{itemize}
+
+\hypertarget{local-static-in-c}{%
+\subsubsection{\texorpdfstring{23.
+\href{https://www.youtube.com/watch?v=f7mtWD9GdJ4\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=23}{Local
+Static in C++}}{23. Local Static in C++}}\label{local-static-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  在一個 local scope（如函數，if statement）裡的 static 變數 lifetime
+  會變成永遠，但 scope 不變
+\end{itemize}
+
+\begin{verbatim}
+void Function()
+{
+    static int i = 0;
+    i++;
+    std::cout << i << std::endl;
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  上面這段 code 有點像把 \texttt{int\ i\ =\ 0;}
+  移到全域。如果呼叫這個函數五次，i
+  就會被遞增五次（所以可以計算這個函數被呼叫了多少次）
+
+  \begin{itemize}
+  \tightlist
+  \item
+    上面這段 code 的初始化 \texttt{i\ =\ 0}
+    只會做一次，因為第二次以後呼叫這個函數時 i 已經存在了不需要初始化
+  \end{itemize}
+\item
+  那為什麼不用全域變數就好了？因為 local static 變數不會改變
+  scope，只有這個函數能計算自己被呼叫的次數。如果宣告成全域變數，在呼叫五次的過程中可能有其它
+  code 會改變 i 的值
+\item
+  兩種 Singleton 的寫法，行為完全一樣，用 local static 寫比較乾淨
+
+  \begin{itemize}
+  \tightlist
+  \item
+  \end{itemize}
+
+\begin{verbatim}
+class Singleton
+{
+private:
+    static Singleton* s_Instance;
+public:
+    static Singleton& Get() { return *s_Instance; }
+    void Hello() {}
+}
+singleton* Singleton::s_Instance = nullptr;
+int main()
+{
+    Singleton::Get().Hellow();
+}
+\end{verbatim}
+
+  \begin{itemize}
+  \tightlist
+  \item
+  \end{itemize}
+
+\begin{verbatim}
+class Singleton
+{
+public:
+    static Singleton& Get() 
+    { 
+        static Singleton instance;
+        return instance; 
+    }
+    void Hello() {}
+}
+int main()
+{
+    Singleton::Get().Hellow();
+}
+\end{verbatim}
+\item
+  上面第二種寫法裡的 \texttt{static\ Singleton\ instance;}
+  只有第一次被呼叫時真正 new 了一個 Singleton，之後就一直用同一個
+  instance
+\end{itemize}
+
+\hypertarget{enums-in-c}{%
+\subsubsection{\texorpdfstring{24.
+\href{https://www.youtube.com/watch?v=x55jfOd5PEE\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=25\&t=0s}{ENUMS
+in C++}}{24. ENUMS in C++}}\label{enums-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  幫整數取名字，增加可讀性
+\end{itemize}
+
+\begin{verbatim}
+enum Example : unsigned char  // 如果不指定預設為 int。不可以用 float 因為一定要整數
+{
+    A=0, B=2, C=6  // 如果不指定而只寫 A, B, C 預設為 0, 1, 2
+};
+int main()
+{
+    Example value = B;
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Log class 例子：
+\end{itemize}
+
+\begin{verbatim}
+class Log
+{
+public:
+    enum Level
+    {
+        LevelError=0, LevelWarning, LevelInfo  // 這樣初始化可以增加可讀性。代表 0, 1, 2
+    }
+private: 
+    Level m_LogLevel = LevelInfo;
+public: 
+    void SetLevel(Level level)
+    {
+        m_LogLevel = level;
+    }
+    void Error(const char* message)
+    {
+        if (m_LogLevel >= LevelError)
+            std::cout << "[ERROR]: " << message << std::end;
+    }
+    void Warn(const char* message)
+    {
+        if (m_LogLevel >= LevelWarning)
+            std::cout << "[WARNING]: " << message << std::end;
+    }
+    void Info(const char* message)
+    {
+        if (m_LogLevel >= LevelInfo)
+            std::cout << "[INFO]: " << message << std::end;
+    }
+};
+int main()
+{
+    Log log;
+    log.SetLevel(Log::LevelError);  // scope operator
+    log.Warn("Hello!");
+    std::cin.get();
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  如果 \texttt{m\_LogLevel} 是 int，有可能會不小心被改成 5。宣告成 Level
+  會比較安全
+\item
+  SetLevel 裡用 scope operator \texttt{Log::LevelError} 就像 LevelError
+  是一個成員變數一樣。enum Level 裡並不是一個 namespace 而是有一個 enum
+  class
+
+  \begin{itemize}
+  \tightlist
+  \item
+    所以這個例子裡 enum 變數不能叫 Error，會跟成員函數重名
+  \item
+    像這個例子的 enum 裡變數名前面灌上該 enum 的名稱也是 common practice
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{constructors-in-c}{%
+\subsubsection{25. Constructors in C++}\label{constructors-in-c}}
+
+\hypertarget{destructors-in-c}{%
+\subsubsection{26. Destructors in C++}\label{destructors-in-c}}
+
+\hypertarget{inheritance-in-c}{%
+\subsubsection{27. Inheritance in C++}\label{inheritance-in-c}}
+
+\hypertarget{virtual-functions-in-c}{%
+\subsubsection{\texorpdfstring{28.
+\href{https://www.youtube.com/watch?v=oIV2KchSyGQ\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=29\&t=0s}{Virtual
+Functions in
+C++}}{28. Virtual Functions in C++}}\label{virtual-functions-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  父類別指標可以指向子類別物件，然後通過 arrow operator 呼叫子類別版本的
+  virtual 成員函數
+\end{itemize}
+
+\begin{verbatim}
+class Entity
+{
+public: 
+    virtual std::string GetName() { return "Entity"; }
+}
+class Player : public Entity
+{
+private:
+    std::string m_Name;
+public:
+    Player(const std::string& name) : m_Name() {}
+    std::string GetName() override { return m_Name; }
+}
+void PrintName(Entity* entity)
+{
+    std::cout << entity->GetName() << std::endl;
+}
+int main()
+{
+    Player* p = new Player("Cherno");
+    PrintName(p)
+    std::cin.get();
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  這裡被傳進 PrintName
+  的指標實際上是指向子類物件還是父類物件，編譯時期是不知道的
+\item
+  C++11 之後子類裡的 override 成員函數定義裡可以加上 override
+  關鍵字，不是強制的但
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    可以增加可讀性
+  \item
+    可以避免函數名字打錯（如果打成 GETNAME() override 編譯會出錯）
+  \item
+    如果父類裡忘了宣告這個函數為 virtual 編譯也會出錯
+  \end{enumerate}
+\item
+  overhead
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    父類裡多出 4 bytes 用來存指向子類 vtable 的指標
+  \item
+    到了子類要查 vtable 找到想要的函數
+  \end{enumerate}
+\end{itemize}
+
+\hypertarget{vtable}{%
+\subsubsection{\texorpdfstring{28.5
+\href{https://www.youtube.com/watch?v=VdvL8kFBubU}{Vtable}}{28.5 Vtable}}\label{vtable}}
+
+\begin{itemize}
+\tightlist
+\item
+  如果沒有任何 virtual function，sizeof
+  一個類別就是所有成員變數總和（成員函數不佔空間）。一旦出現 virtual
+  function 而成為一個父類，sizeof 會多出 4 bytes 用來存指向子類 vtable
+  的指標
+\item
+  每一個子類有一個自己的 vtable，同一個子類的所有 instance 都共用這個
+  vtable
+\item
+  vtable 裡有很多函數指標，指向所有在這個子類裡有 override 的 virtual
+  function
+\item
+  vtable 簡介在 Stroustrup 的 The C++ Programming Language, 4th Ed
+  第三章（p.67）
+\end{itemize}
+
+\hypertarget{interfaces-in-c-pure-virtual-functions}{%
+\subsubsection{\texorpdfstring{29.
+\href{https://www.youtube.com/watch?v=UWAdd13EfM8\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=30\&t=0s}{Interfaces
+in C++ (Pure Virtual
+Functions)}}{29. Interfaces in C++ (Pure Virtual Functions)}}\label{interfaces-in-c-pure-virtual-functions}}
+
+\begin{itemize}
+\tightlist
+\item
+  在父類裡把某個成員函數的 body 拿掉換成 \texttt{=0;}，這個父類就變成
+  interface，不能有自己的 object，並且強迫所有子類要 override 這個函數
+\end{itemize}
+
+\begin{verbatim}
+    virtual std::string GetName() = 0;
+\end{verbatim}
+
+\hypertarget{visibility-in-c}{%
+\subsubsection{30. Visibility in C++}\label{visibility-in-c}}
+
+\hypertarget{arrays-in-c}{%
+\subsubsection{\texorpdfstring{31.
+\href{https://www.youtube.com/watch?v=ENDaJi08jCU\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=32\&t=0s}{Arrays
+in C++}}{31. Arrays in C++}}\label{arrays-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  Lua array index 從 1 開始
+\item
+  如果存到超出 array 的範圍，在 debug mode 會 crash 但在 release mode
+  不會有任何警告，然後就會很難 debug
+\item
+  pointer arithmetic： main 裡面的三行做的事一樣
+\end{itemize}
+
+\begin{verbatim}
+int a[5];
+int* ptr = a;
+int main()
+{
+    a[2] = 5;
+    *(ptr + 2) = 5;
+    *(int*)((char*)ptr + 8) = 5;
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{ptr\ +\ 2} 實際上在記憶體裡要 offset 幾個 byte 取決於 ptr
+  是哪一類的指標。int 佔 4 bytes，char 只佔 1 byte，所以如果把 ptr cast
+  成 char* 之後要加 8 才會指到同一個位址（然後還要 cast 回來）
+\item
+  stack 和 heap based array 的差別
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    lifetime：stack based 只看 scope，new 出來的要一直到看到 delete
+    才會消失
+  \item
+    new 比較慢因為會有 memory fragmentation，cache misses
+  \end{enumerate}
+\item
+  C++11 之後有 std::array。儘量用 std::array 取代 raw array
+\end{itemize}
+
+\begin{verbatim}
+#include <array>
+int main():
+{
+    std::array<int, 3> a = {1, 2, 3};
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  stack based array 例如 \texttt{int\ a{[}5{]};} 可以這樣算出長度
+  \texttt{sizeof(a)/size(int)}，heap based 就沒辦法了（其實有辦法但是
+  compiler dependent，不要用）
+\item
+  用一個變數來 manage size：
+\end{itemize}
+
+\begin{verbatim}
+static const int size = 5;
+int a[size];
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  這裡一定要用 static const 因為 stack based array
+  長度必需在編譯時期就知道。如果是 heap based 就不用
+\end{itemize}
+
+\hypertarget{how-strings-work-in-c-and-how-to-use-them}{%
+\subsubsection{32. How Strings Work in C++ (and how to use
+them)}\label{how-strings-work-in-c-and-how-to-use-them}}
+
+\hypertarget{string-literals-in-c}{%
+\subsubsection{33. String Literals in C++}\label{string-literals-in-c}}
+
+\hypertarget{const-in-c}{%
+\subsubsection{\texorpdfstring{34.
+\href{https://www.youtube.com/watch?v=4fJBrditnJU\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=35\&t=0s}{CONST
+in C++}}{34. CONST in C++}}\label{const-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{int*\ const\ a\ =\ new\ int;}
+  不能改指向別的位址，但可以改裡面住的人（從右往左讀：a 是一個 const）
+\item
+  \texttt{const\ int*\ a\ =\ new\ int;}
+  可以改指向別的位址，但不能改裡面住的人（從右往左讀：a 是一個指標，指向
+  const int）
+\item
+  \texttt{int\ const*\ a\ =\ new\ int;} 同上。只有 const 放在 *
+  前後會有差別
+\item
+  \texttt{const\ int*\ const\ a\ =\ new\ int;} 位址和內容都不能改
+\item
+  const 成員變數，不能改任何成員變數
+\end{itemize}
+
+\begin{verbatim}
+class Entity
+{
+private:
+    int m_x, m_y;
+    mutable int val;
+public: 
+    int GetX() const
+    {
+        val = 2;    // 宣告成 mutable 的成員變數可以改
+        return m_x;
+    }
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{const\ int*\ const\ GetPtr()\ const}
+  回傳一個指標，位址和內容都不能改，並且這個成員函數也不更改任何成員變數
+\item
+  下面這個函數裡 e 只能呼叫 const 成員函數，因為傳進來的時候就被限定是
+  const ref，不能改 e
+  裡面的任何東西。所以有時候會看到同樣的成員函數被定義兩次，一次是 const
+  另一次不是
+\end{itemize}
+
+\begin{verbatim}
+void PrintEntity(const Entity& e)
+{
+    std::cout << e.GetX() << std::end;
+}
+\end{verbatim}
+
+\hypertarget{the-mutable-keyword-in-c}{%
+\subsubsection{\texorpdfstring{35.
+\href{https://www.youtube.com/watch?v=bP9z3H3cVMY\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=35}{The
+Mutable Keyword in
+C++}}{35. The Mutable Keyword in C++}}\label{the-mutable-keyword-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  mutable 關鍵字有兩個不同的意義：
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    使某成員變數在 const
+    成員函數裡能被改寫，看上面的例子。大部份時候是為了
+    debug，如果直接把該成員函數改成 non-const 可能會 break 別的東西
+  \item
+    lambda（The Cherno 實務上從來沒看過人這麼寫，從來不需要）
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \texttt{auto\ f\ =\ {[}={]}()} 把 scope 裡所有東西傳進去，by value
+    \item
+      \texttt{auto\ f\ =\ {[}\&{]}()} 把 scope 裡所有東西傳進去，by ref
+    \end{itemize}
+
+\begin{verbatim}
+int main()
+{
+    int x = 8;
+    auto f = [=]() mutable
+    {
+        x++;  // call by value 的時候如果不把這個 lambda 函數宣告成 mutable，就不能改內容
+        std::cout << x << std::end;
+    };
+    f();
+    // x 還是 8，並沒有被遞增，因為 call by value
+}     
+\end{verbatim}
+  \end{enumerate}
+\end{itemize}
+
+\hypertarget{member-initializer-lists-in-c-constructor-initializer-list}{%
+\subsubsection{36. Member Initializer Lists in C++ (Constructor
+Initializer
+List)}\label{member-initializer-lists-in-c-constructor-initializer-list}}
+
+\hypertarget{ternary-operators-in-c-conditional-assignment}{%
+\subsubsection{37. Ternary Operators in C++ (Conditional
+Assignment)}\label{ternary-operators-in-c-conditional-assignment}}
+
+\hypertarget{how-to-createinstantiate-objects-in-c}{%
+\subsubsection{38. How to CREATE/INSTANTIATE OBJECTS in
+C++}\label{how-to-createinstantiate-objects-in-c}}
+
+\hypertarget{the-new-keyword-in-c}{%
+\subsubsection{39. The NEW Keyword in C++}\label{the-new-keyword-in-c}}
+
+\hypertarget{implicit-conversion-and-the-explicit-keyword-in-c}{%
+\subsubsection{40. Implicit Conversion and the Explicit Keyword in
+C++}\label{implicit-conversion-and-the-explicit-keyword-in-c}}
+
+\hypertarget{operators-and-operator-overloading-in-c}{%
+\subsubsection{41. OPERATORS and OPERATOR OVERLOADING in
+C++}\label{operators-and-operator-overloading-in-c}}
+
+\hypertarget{the-this-keyword-in-c}{%
+\subsubsection{42. The ``this'' keyword in
+C++}\label{the-this-keyword-in-c}}
+
+\hypertarget{object-lifetime-in-c-stackscope-lifetimes}{%
+\subsubsection{\texorpdfstring{43.
+\href{https://www.youtube.com/watch?v=iNuTwvD6ciI}{Object Lifetime in
+C++ (Stack/Scope
+Lifetimes)}}{43. Object Lifetime in C++ (Stack/Scope Lifetimes)}}\label{object-lifetime-in-c-stackscope-lifetimes}}
+
+\begin{itemize}
+\tightlist
+\item
+  直接宣告變數獲得的記憶體空間 stack based
+
+  \begin{itemize}
+  \tightlist
+  \item
+    每一層 scope 都是 stack 上的一個 frame。每新建一個 scope 就是在
+    push，就像把一本書放到一整疊書的最上面。當在這個 scope
+    裡宣告變數就等於是把它寫在這本書裡。離開這個 scope 就是
+    pop，把這本書連同所有內容全部丟掉
+  \end{itemize}
+\item
+  用 new 配置的記憶體空間是 heap based，在 delete
+  之前這塊空間是不會消失的
+\item
+  常見錯誤：在函數裡配置 stack based
+  記憶體空間然後回傳指標，這樣做一出函數時配置給 a 的記憶體空間就消失了
+\end{itemize}
+
+\begin{verbatim}
+int* CreateArray()
+{
+    int array[50];
+    return array;
+}
+int main()
+{
+    int* a = CreateArray();
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Scoped class：寫一個 class 當作 python 的 with 來用。用 ctor 和 dtor
+  來當作 \texttt{\_\_enter\_\_} 和 \texttt{\_\_exit\_\_}，可以用來寫：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    timer
+  \item
+    mutex locking for multithreading
+  \item
+    scoped pointer，如 unique pointer：
+  \end{itemize}
+
+\begin{verbatim}
+class ScopedPtr
+{
+private: 
+    Entity* m_Ptr;
+public: 
+    ScopedPtr(Entity* ptr): m_Ptr(ptr){}
+    ~ScopedPtr()
+    {
+        delete m_Ptr;
+    }
+};
+int main()
+{
+    {
+        ScopedPtr e = new Entity();
+    }
+}
+\end{verbatim}
+\end{itemize}
+
+\hypertarget{smart-pointers-in-c-stdunique_ptr-stdshared_ptr-stdweak_ptr}{%
+\subsubsection{\texorpdfstring{44.
+\href{https://www.youtube.com/watch?v=UOB7-B2MfwA\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=45\&t=0s}{SMART
+POINTERS in C++ (std::unique\_ptr, std::shared\_ptr,
+std::weak\_ptr)}}{44. SMART POINTERS in C++ (std::unique\_ptr, std::shared\_ptr, std::weak\_ptr)}}\label{smart-pointers-in-c-stdunique_ptr-stdshared_ptr-stdweak_ptr}}
+
+\begin{itemize}
+\tightlist
+\item
+  new 完不用 delete，在 out of scope 時記憶體會自動被釋放（物件毀滅）
+\item
+  試著用 smart pointers 取代 raw pointers。能用 unique\_ptr 就用
+  unique\_ptr，真正需要 share 的時候才用 shared\_ptr
+\item
+  unique\_ptr：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    不能被複製。因為如果 ptr1 = ptr2，後來 pt1 先 go out of scope
+    了，所指向的物件就會毀滅，繼續使用 ptr2 就會出錯（或者當 ptr2 也 go
+    out of scope 也會出錯）
+  \end{itemize}
+
+\begin{verbatim}
+#include <memory>
+int main()
+{
+    {
+        // std::unique_ptr<Entity> e1 = new Entity();  不合法因為 unique_ptr 的 ctor 是 explicit
+        std::unique_ptr<Entity> e1(new Entity());
+        std::unique_ptr<Entity> e2 = std::make_unique<Entity>();
+        // std::unique_ptr<Entity> e3 = e2;  不合法因為不能複製。unique_ptr 的 copy ctor 和 assignment 都被設成 delete 了
+        e1->Print();
+        e2->Print();
+    }
+}
+\end{verbatim}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    呼叫 Entity 成員的方式完全同 raw pointer
+  \item
+    一出 scope 物件自動毀滅
+  \item
+    用 make\_unique 作初始化比較安全，處理了 constructor 出 exception
+    的情況
+  \item
+    幾乎沒有 overhead
+  \end{itemize}
+\item
+  shared\_ptr：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    有一個 reference counting system 計算這個 ptr
+    被複製幾次，變成零的時候釋放記憶體
+  \end{itemize}
+
+\begin{verbatim}
+#include <memory>
+int main()
+{
+    {
+        std::shared_ptr<Entity> e1(new Entity());  //是合法的但不要用。這樣比較慢
+        {
+            std::shared_ptr<Entity> e2 = std::make_shared<Entity>();
+            std::weak_ptr<Entity> e3 = e1;
+            e1 = e2;
+        }// 內層
+    }// 外層
+}
+\end{verbatim}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    如果用 make\_shared，reference counting 所需要的記憶體和 Entity
+    instance 是一起配置的所以比較快
+  \item
+    出內層的時候雖然 e2 死了，但物件還在，到離開外層的時候因為連 e1
+    都死了，物件才被消滅
+  \end{itemize}
+\item
+  weak\_ptr：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    和 shared\_ptr 一起用。上面那段程式裡的 \texttt{e3\ =\ e1} 不會增加
+    reference count
+  \item
+    不想 take ownership of entity 的時候用
+  \item
+    可以透過 weak\_ptr 問一個物件是否還活著，但 weak\_ptr 不會 keep it
+    alive
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{copying-and-copy-constructors-in-c}{%
+\subsubsection{45. Copying and Copy Constructors in
+C++}\label{copying-and-copy-constructors-in-c}}
+
+\hypertarget{the-arrow-operator-in-c}{%
+\subsubsection{46. The Arrow Operator in
+C++}\label{the-arrow-operator-in-c}}
+
+\hypertarget{dynamic-arrays-in-c-stdvector}{%
+\subsubsection{47. Dynamic Arrays in C++
+(std::vector)}\label{dynamic-arrays-in-c-stdvector}}
+
+\hypertarget{optimizing-the-usage-of-stdvector-in-c}{%
+\subsubsection{48. Optimizing the usage of std::vector in
+C++}\label{optimizing-the-usage-of-stdvector-in-c}}
+
+\hypertarget{using-libraries-in-c-static-linking}{%
+\subsubsection{\texorpdfstring{49.
+\href{https://www.youtube.com/watch?v=or1dAmUO8k0\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=50\&t=0s}{Using
+Libraries in C++ (Static
+Linking)}}{49. Using Libraries in C++ (Static Linking)}}\label{using-libraries-in-c-static-linking}}
+
+\hypertarget{using-dynamic-libraries-in-c}{%
+\subsubsection{\texorpdfstring{50.
+\href{https://www.youtube.com/watch?v=pLy69V2F_8M\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=51\&t=0s}{Using
+Dynamic Libraries in
+C++}}{50. Using Dynamic Libraries in C++}}\label{using-dynamic-libraries-in-c}}
+
+\hypertarget{making-and-working-with-libraries-in-c-multiple-projects-in-visual-studio}{%
+\subsubsection{\texorpdfstring{51.
+\href{https://www.youtube.com/watch?v=Wt4dxDNmDA8\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=52\&t=0s}{Making
+and Working with Libraries in C++ (Multiple Projects in Visual
+Studio)}}{51. Making and Working with Libraries in C++ (Multiple Projects in Visual Studio)}}\label{making-and-working-with-libraries-in-c-multiple-projects-in-visual-studio}}
+
+\begin{itemize}
+\tightlist
+\item
+  原來 GDA 是這樣設置的
+\end{itemize}
+
+\hypertarget{how-to-deal-with-multiple-return-values-in-c}{%
+\subsubsection{52. How to Deal with Multiple Return Values in
+C++}\label{how-to-deal-with-multiple-return-values-in-c}}
+
+\hypertarget{templates-in-c}{%
+\subsubsection{\texorpdfstring{53.
+\href{https://www.youtube.com/watch?v=I-hZkUa9mIs\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=53}{Templates
+in C++}}{53. Templates in C++}}\label{templates-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  叫 compiler 幫你寫 code（template will be compiled by your usage）
+\item
+  下面這個例子如果要改 Print 的定義就要改兩次
+\end{itemize}
+
+\begin{verbatim}
+void Print(int value)
+{
+    std::cout << value << std::end;
+}
+void Print(float value)
+{
+    std::cout << value << std::end;
+}
+int main()
+{
+    Print(5);
+    Print(5.5f);
+    std::cin.get();
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  template 版定義：
+\end{itemize}
+
+\begin{verbatim}
+template<typename T>
+void Print(T value)
+{
+    std::cout << value << std::end;
+}
+int main()
+{
+    Print<int>(5);
+    Print(5.5f);
+    std::cin.get();
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  這個 Print 不是真正意義上的函數，而是一個
+  template。只有被呼叫到的時候才編譯，所以如果沒有被呼叫過，template
+  裡面就算有文法錯還是可以編譯
+\item
+  呼叫時可以 \texttt{Print\textless{}int\textgreater{}(5);} 也可以直接
+  \texttt{Print(5);}，編譯器會自己 infer
+\item
+  std::array template 的定義是像這樣：
+\end{itemize}
+
+\begin{verbatim}
+template<typename T, int N>
+class Array
+{
+private:
+    T m_Array[N]
+public: 
+    int GetSize() const { return N; }
+};
+int main()
+{
+    Array<int, 5> a;
+    std::cout << a.GetSize() << std::end;
+    std::cin.get();
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  用 template 是在「program the
+  compiler」，可以改到很複雜。有些公司直接禁用
+\item
+  The Cherno 認為不該全面禁用因為 template
+  還是很強大的。一個很好的應用是 logging system，因為可能想 log 的 type
+  有無限多種
+\item
+  但如果改到太複雜會很難 debug，只能紙筆寫下追蹤到底編譯了什麼 code
+\end{itemize}
+
+\hypertarget{stack-vs-heap-memory-in-c}{%
+\subsubsection{\texorpdfstring{54.
+\href{https://www.youtube.com/watch?v=wJ1L2nSIV1s\&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&index=54}{Stack
+vs Heap Memory in
+C++}}{54. Stack vs Heap Memory in C++}}\label{stack-vs-heap-memory-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://stackoverflow.com/questions/14588767/where-in-memory-are-my-variables-stored-in-c}{C++
+  程式開始執行時系統配置給該程式的記憶體會被分成五大區塊}
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Code Segment
+
+    \begin{itemize}
+    \tightlist
+    \item
+      text, code, functions
+    \end{itemize}
+  \item
+    Uninitialized Data Segment
+  \item
+    Initialized Data Segment
+
+    \begin{itemize}
+    \tightlist
+    \item
+      static and global variables
+    \end{itemize}
+  \item
+    Stack Segment
+  \item
+    Heap Segment
+  \end{enumerate}
+\item
+  Stack 跟 Heap 都是在記憶體裡，不會預設放在 CPU cache
+\item
+  Stack Based Memory：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    new 出來的記憶體空間就是 Heap based，其它都是 stack based
+  \item
+    空間大小編譯時期就必需知道，這樣才能知道程式的 stack 區塊要預留多大
+  \item
+    Stack based 記憶體只有在該變數的 scope 內才活著
+  \item
+    Stack memory allocation 只是改 stack pointer（釋放記憶體也一樣），在
+    assembly 裡就是一個 mov，只有一個 CPU instruction，非常快！
+  \item
+    Stack 裡所有變數都是擠在一起的，除了中間可能會被一些 safety guard
+  \item
+    \href{https://youtu.be/wJ1L2nSIV1s?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&t=419}{大部份
+    stack implementation 都是 grow the stack backward} 所以 VS
+    裡看到的記憶體內容是倒過來的
+  \end{itemize}
+\item
+  Heap Based Memory：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    new 出來之後會一直活到被 delete
+  \item
+    new 其實是呼叫
+    malloc，在執行期間去找目前能用且夠大的記憶體空間。系統預設會給一個程式一些
+    free list
+    空間，如果那些也不夠，程式就要另外向系統要多的空間，系統負責去找出夠大的空間配置給程式並聲明這塊空間被佔用了。很多
+    bookkeeping 要做，比 stack allocation（1 CPU instruction）慢很多
+  \end{itemize}
+\item
+  當情況允許時應該盡量用 stack allocation
+\item
+  \href{https://youtu.be/wJ1L2nSIV1s?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&t=828}{這裡}比較了兩種
+  allocation 的 assembly
+\end{itemize}
+
+\hypertarget{macros-in-c}{%
+\subsubsection{55. Macros in C++}\label{macros-in-c}}
+
+\hypertarget{the-auto-keyword-in-c}{%
+\subsubsection{56. The ``auto'' keyword in
+C++}\label{the-auto-keyword-in-c}}
+
+\hypertarget{static-arrays-in-c-stdarray}{%
+\subsubsection{57. Static Arrays in C++
+(std::array)}\label{static-arrays-in-c-stdarray}}
+
+\hypertarget{function-pointers-in-c}{%
+\subsubsection{58. Function Pointers in
+C++}\label{function-pointers-in-c}}
+
+\hypertarget{lambdas-in-c}{%
+\subsubsection{59. Lambdas in C++}\label{lambdas-in-c}}
+
+\hypertarget{why-i-dont-using-namespace-std}{%
+\subsubsection{60. Why I don't ``using namespace
+std''}\label{why-i-dont-using-namespace-std}}
+
+\hypertarget{namespaces-in-c}{%
+\subsubsection{61. Namespaces in C++}\label{namespaces-in-c}}
+
+\hypertarget{threads-in-c}{%
+\subsubsection{62. Threads in C++}\label{threads-in-c}}
+
+\hypertarget{timing-in-c}{%
+\subsubsection{63. Timing in C++}\label{timing-in-c}}
+
+\hypertarget{multidimensional-arrays-in-c-2d-arrays}{%
+\subsubsection{64. Multidimensional Arrays in C++ (2D
+arrays)}\label{multidimensional-arrays-in-c-2d-arrays}}
+
+\hypertarget{sorting-in-c}{%
+\subsubsection{65. Sorting in C++}\label{sorting-in-c}}
+
+\hypertarget{type-punning-in-c}{%
+\subsubsection{66. Type Punning in C++}\label{type-punning-in-c}}
+
+\hypertarget{unions-in-c}{%
+\subsubsection{67. Unions in C++}\label{unions-in-c}}
+
+\hypertarget{virtual-destructors-in-c}{%
+\subsubsection{68. Virtual Destructors in
+C++}\label{virtual-destructors-in-c}}
+
+\hypertarget{casting-in-c}{%
+\subsubsection{69. Casting in C++}\label{casting-in-c}}
+
+\hypertarget{conditional-and-action-breakpoints-in-c}{%
+\subsubsection{70. Conditional and Action Breakpoints in
+C++}\label{conditional-and-action-breakpoints-in-c}}
+
+\hypertarget{safety-in-modern-c-and-how-to-teach-it}{%
+\subsubsection{71. Safety in modern C++ and how to teach
+it}\label{safety-in-modern-c-and-how-to-teach-it}}
+
+\hypertarget{precompiled-headers-in-c}{%
+\subsubsection{72. Precompiled Headers in
+C++}\label{precompiled-headers-in-c}}
+
+\hypertarget{dynamic-casting-in-c}{%
+\subsubsection{73. Dynamic Casting in C++}\label{dynamic-casting-in-c}}
+
+\hypertarget{benchmarking-in-c-how-to-measure-performance}{%
+\subsubsection{74. BENCHMARKING in C++ (how to measure
+performance)}\label{benchmarking-in-c-how-to-measure-performance}}
+
+\hypertarget{structured-bindings-in-c}{%
+\subsubsection{75. STRUCTURED BINDINGS in
+C++}\label{structured-bindings-in-c}}
+
+\hypertarget{how-to-deal-with-optional-data-in-c}{%
+\subsubsection{76. How to Deal with OPTIONAL Data in
+C++}\label{how-to-deal-with-optional-data-in-c}}
+
+\hypertarget{multiple-types-of-data-in-a-single-variable-in-c}{%
+\subsubsection{77. Multiple TYPES of Data in a SINGLE VARIABLE in
+C++?}\label{multiple-types-of-data-in-a-single-variable-in-c}}
+
+\hypertarget{how-to-store-any-data-in-c}{%
+\subsubsection{78. How to store ANY data in
+C++}\label{how-to-store-any-data-in-c}}
+
+\hypertarget{how-to-make-c-run-faster-with-stdasync}{%
+\subsubsection{79. How to make C++ run FASTER (with
+std::async)}\label{how-to-make-c-run-faster-with-stdasync}}
+
+\hypertarget{how-to-make-your-strings-faster-in-c}{%
+\subsubsection{80. How to make your STRINGS FASTER in
+C++!}\label{how-to-make-your-strings-faster-in-c}}
+
+\hypertarget{visual-benchmarking-in-c-how-to-measure-performance-visually}{%
+\subsubsection{81. VISUAL BENCHMARKING in C++ (how to measure
+performance
+visually)}\label{visual-benchmarking-in-c-how-to-measure-performance-visually}}
+
+\hypertarget{singletons-in-c}{%
+\subsubsection{82. SINGLETONS in C++}\label{singletons-in-c}}
+
+\hypertarget{small-string-optimization-in-c}{%
+\subsubsection{83. Small String Optimization in
+C++}\label{small-string-optimization-in-c}}
+
+\hypertarget{track-memory-allocations-the-easy-way-in-c}{%
+\subsubsection{84. Track MEMORY ALLOCATIONS the Easy Way in
+C++}\label{track-memory-allocations-the-easy-way-in-c}}
+
+\hypertarget{lvalues-and-rvalues-in-c}{%
+\subsubsection{\texorpdfstring{85.
+\href{https://youtu.be/fbYknr-HPYE?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&t=179}{lvalues
+and rvalues in
+C++}}{85. lvalues and rvalues in C++}}\label{lvalues-and-rvalues-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  在記憶體裡有位址的就是 lvalue，沒有的（temporary object）就是
+  rvalue，例如 \texttt{int\ i\ =\ 10;} 裡 i 是 lvalue，10 是 rvalue
+\item
+  函數如果回傳暫存物件也是 rvalue，例如
+  \texttt{int\ i\ =\ GetValue();}，這裡 GetValue 是一個回傳整數 10
+  的函數
+\item
+  不能 assign 給 rvalue，例如 \texttt{10\ =\ i;} 因為 temporary object
+  沒有記憶體位址沒辦法存 assign 進來的東西
+
+  \begin{itemize}
+  \tightlist
+  \item
+    （所以左邊就一定是 lvalue？）
+  \item
+    不一定在右邊就是 rvalue，例如可以 \texttt{a\ =\ i;}
+  \item
+    如果 GetValue() 回傳 rvalue (如 int)，\texttt{GetValue()\ =\ 5;}
+    編譯器會報錯 expression must be a modifiable (non-const) lvalue
+  \end{itemize}
+\item
+  要讓 \texttt{GetValue()\ =\ 5;} 合法需要回傳 lvalue ref
+\end{itemize}
+
+\begin{verbatim}
+int& GetValue()
+{
+    static int value = 10;
+    return value;
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  lvalue ref 不能接收 rvalue！！！lvalue ref 就是 lvalue
+  的別名，只能接收 lvalue
+\end{itemize}
+
+\begin{verbatim}
+void SetValue(int& value){}
+int main()
+{
+    int i = 10;
+    int j = 5;
+    SetValue(i);    // 合法
+    SetValue(10);   // 不合法
+    SetValue(i+j);  // 不合法
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  但是！！有一個例外：const lvalue ref 可以接收 rvalue
+\end{itemize}
+
+\begin{verbatim}
+const int& a = 10;  // 合法
+int& b = 10;        // 不合法
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  expression 像 \texttt{a\ +\ b} 是 rvalue，所以上面的
+  \texttt{SetValue(i+j);} 不合法，但是用上面的例外把定義改成
+  \texttt{void\ SetValue(const\ int\&\ value)\{\}} 就合法了
+
+  \begin{itemize}
+  \tightlist
+  \item
+    所以 C++ 才會那麼多函數的輸入型別都是 const lvalue ref
+  \item
+    這樣寫的好處是函數可以接收 lvalue 也可以接受 rvalue
+  \end{itemize}
+\item
+  C++ 11 開始有只能接收 rvalue 的 rvalue ref
+  \texttt{int\&\&\ value}（當對於只能接收 lvalue 的 (non-const) lvalue
+  ref）：
+\end{itemize}
+
+\begin{verbatim}
+void SetValue(int&& value){}
+int main()
+{
+    int i = 10;
+    int j = 5;
+    SetValue(i);    // 不合法
+    SetValue(10);   // 合法
+    SetValue(i+j);  // 合法
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  如果 overload（像下面這樣定義兩次），雖然 const lvalue ref 可以接收
+  rvalue，但傳入 rvalue 時還是會呼叫 rvalue ref 的版本
+\end{itemize}
+
+\begin{verbatim}
+void SetValue(const int& value){}
+void SetValue(int&& value){}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://youtu.be/fbYknr-HPYE?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&t=692}{使用
+  rvalue 的優點（會比較快？）}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    例如上面的 \texttt{SetValue(i+j);} 不用為 \texttt{i\ +\ j}
+    配置記憶體
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{continuous-integration-in-c}{%
+\subsubsection{86. Continuous Integration in
+C++}\label{continuous-integration-in-c}}
+
+\hypertarget{static-analysis-in-c}{%
+\subsubsection{87. Static Analysis in C++}\label{static-analysis-in-c}}
+
+\hypertarget{argument-evaluation-order-in-c}{%
+\subsubsection{88. Argument Evaluation Order in
+C++}\label{argument-evaluation-order-in-c}}
+
+\hypertarget{move-semantics-in-c}{%
+\subsubsection{\texorpdfstring{89.
+\href{https://youtu.be/ehMg6zvXuMY?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&t=209}{Move
+Semantics in
+C++}}{89. Move Semantics in C++}}\label{move-semantics-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  有兩種情況需要複製一個物件：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    return 一個物件時需要的 temp object：有 return value optimization
+    可以處理
+  \item
+    把物件傳進函數裡，想要 take ownership 但不想要實際上 copy
+    時，其實應該用 move 才對
+  \end{itemize}
+\item
+  下面這段程式因為 String 沒有 move ctor，執行會印出
+  \texttt{Created!\ Copied!\ Cherno}，String 的 ctor 和 copy ctor
+  加起來總共 new 了兩次記憶體，一次在 \texttt{String("Cherno")}
+  被構造出來的時候，一次是在它被傳進 e1 裡的時候 Entity 的 ctor 做了一次
+  copy。如果有 move ctor，\texttt{Entity\ e1("Cherno");} 就可以真正傳
+  rvalue 進到 Entity 裡，那個 copy 就可以省下來
+\end{itemize}
+
+\begin{verbatim}
+#include<iostream>
+class String
+{
+public: 
+    String() = default;
+    String(const char* string)  // ctor
+    {
+        printf("Created!\n");
+        m_Size = strlen(string);
+        m_Data = new char[m_Size];
+        memcpy(m_Data, string, m_Size);
+    }
+    String(const String& other)  // copy ctor
+    {
+        printf("Copied!\n");
+        m_Size = other.m_Size;
+        m_Data = new char[m_Size];
+        memcpy(m_Data, other.m_Data, m_Size);
+    }
+    ~String()
+    {
+        printf("Destroyed!\n")
+        delete m_Data;
+    }
+    void Print()
+    {
+        for(uint32_t i= 1; i < m_Size; i++)
+            printf("%c", m_Data[i]);
+        printf("\n");
+    }
+private:
+    char* m_Data;
+    uint32_t m_Size;
+};
+class Entity
+{
+public:
+    Entity(const String& name): m_Name(name){}
+    void PrintName()
+    {
+        m_Name.Print();
+    }
+private:
+    String m_Name;
+}
+int main():
+{
+    Entity e1("Cherno");  // 沒有 move，同 Entity e1(String("Cherno"));
+    e1.PrintName();
+    std::cin.get();
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  為了省下那次 copy，需要寫
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    可接收 rvalue 的 Entity ctor。下面這兩個做一樣的事情：把 input cast
+    成 rvalue。少了這個 cast 還是會呼叫到 String 的 ctor（實務上都是寫
+    \texttt{std::move} 而不會直接 cast）
+  \end{enumerate}
+
+\begin{verbatim}
+Entity(String&& name): m_Name((String&&)name){}
+Entity(String&& name): m_Name(std::move(name)){}
+\end{verbatim}
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    String 的 move ctor。這裡只有 rewire 指標而已，沒有 new
+  \end{enumerate}
+
+\begin{verbatim}
+String(String&& other) noexcept  // move ctor
+{
+    printf("Moved!\n");
+    m_Size = other.m_Size;
+    m_Data = other.m_Data;
+    other.m_Size = 0;
+    other.m_Data = nullptr;
+}
+\end{verbatim}
+\item
+  \href{https://youtu.be/ehMg6zvXuMY?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&t=600}{為什麼需要
+  \texttt{other.m\_Data\ =\ nullptr;}？}因為傳進 Entity 裡的 rvalue
+  String 在毀滅的時候一樣會呼叫 dtor，如果沒有在 move ctor 裡把 other
+  設成 hollow object，當 move 完成的時候 other 和 m\_Data
+  會指著同一塊記憶體，而這塊記憶體馬上就被 rvalue
+  String（在這個例子裡是傳進 Entity ctor 裡的
+  \texttt{String\&\&\ name}）呼叫的 dtor delete 掉了
+\end{itemize}
+
+\hypertarget{stdmove-and-the-move-assignment-operator-in-c}{%
+\subsubsection{\texorpdfstring{90.
+\href{https://youtu.be/OWNeCTd7yQE?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&t=146}{std::move
+and the Move Assignment Operator in
+C++}}{90. std::move and the Move Assignment Operator in C++}}\label{stdmove-and-the-move-assignment-operator-in-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  用上面的例子，這兩行 code 會呼叫 copy ctor：
+\end{itemize}
+
+\begin{verbatim}
+String string = "Hello";
+String dest = string;
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  如果想讓它呼叫 move ctor 而不是 copy，可以用下面任意一種：
+\end{itemize}
+
+\begin{verbatim}
+String dest = (String&&)string;
+String dest((String&&)string);
+String dest = std::move(string);
+String dest(std::move(string));
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{std::move} 做的事就是把傳進來的物件 cast 成 rvalue。如果要
+  move 一個已經是 rvalue 的物件，就不需要 \texttt{std::move}。如果要
+  move 的一個新構造的物件，也可以不用 \texttt{std::move} 因為 ctor
+  本來也就會耗資源。但如果是一個已經存在的 lvalue 物件，用
+  \texttt{std::move} 可以省下 copy 造成的額外負擔
+\item
+  \texttt{std::move} 比直接 cast 好因為
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \href{https://youtu.be/OWNeCTd7yQE?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb\&t=306}{有些情況下}
+    cast 會失敗
+  \item
+    增加 code 可讀性
+  \end{itemize}
+\item
+  以上所有 dest 都是新宣告的，所以呼叫 move ctor。如果 dest
+  已經存在，就需要 move assignment：
+\end{itemize}
+
+\begin{verbatim}
+String dest1 = std::move(string);  // 呼叫 move ctor
+String dest2;
+dest2 = std::move(string);         // 呼叫 move assignment
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  move assignment：
+\end{itemize}
+
+\begin{verbatim}
+String& operator=(String&& other) noexcept
+{
+    printf("Moved!\n");
+    if (this != &other)
+    {
+        delete[] m_Data;
+        m_Size = other.m_Size;
+        m_Data = other.m_Data;
+        other.m_Size = 0;
+        other.m_Data = nullptr;
+    }
+    return *this;
+}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  和 move ctor 有三處不同：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    以 ref 的型式回傳自己（*this）
+  \item
+    需要 \texttt{delete{[}{]}\ m\_Data;} 因為 move ssign 之後原本的 data
+    就不需要了，新的 m\_Data 指標被指向新的 data，如果不先 delete 舊的
+    data 會有 memory leaking
+  \item
+    檢查 \texttt{this\ !=\ \&other} 是為了防止有人呼叫
+    \texttt{dest\ =\ std::move(dest);}（把自己傳給自己）
+  \end{itemize}
+\item
+  下面這段 code 在 move 之前 dest 是空的，move 完之後變成 apple 是空的：
+\end{itemize}
+
+\begin{verbatim}
+String apple = "Apple";
+String dest;
+dest = std::move(apple);
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  所以現在 C++ 物件必寫函數從四個變成六個：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    ctor
+  \item
+    dtor
+  \item
+    copy ctor
+  \item
+    copy assignment
+  \item
+    move ctor
+  \item
+    move assignment
+  \end{itemize}
+\item
+  \href{https://en.cppreference.com/w/cpp/language/rule_of_three}{Rule
+  of three/five/zero}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    3: 如果需要下列三者之一，幾乎可以肯定三者同時需要：custom dtor，copy
+    ctor，copy assignment
+  \item
+    5: 需要 move semantics 的 class 要另外寫 move ctor 和 move
+    assignment
+  \item
+    0: 如果一個 class 沒有 ownership
+    的概念，應該上面五個都不要寫（單一職掌原則）
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{array---making-data-structures-in-c}{%
+\subsubsection{91. ARRAY - Making DATA STRUCTURES in
+C++}\label{array---making-data-structures-in-c}}
+
+\hypertarget{vectordynamic-array---making-data-structures-in-c}{%
+\subsubsection{92. VECTOR/DYNAMIC ARRAY - Making DATA STRUCTURES in
+C++}\label{vectordynamic-array---making-data-structures-in-c}}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
