@@ -25,7 +25,9 @@ RUN apt-get clean && apt-get update && apt-get install -y \
     texlive-math-extra \
     texlive-publishers \
     texlive-science \
-    texlive-xetex
+    texlive-xetex \ 
+    texlive-fonts-recommended \
+    texlive-generic-recommended
 
 # Add xindy-2.2 instead of makeindex.
 # ADD ./packages/xindy-2.2-rc2-linux.tar.gz /opt
