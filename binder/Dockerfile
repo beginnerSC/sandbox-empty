@@ -5,6 +5,7 @@ RUN pip install --no-cache --upgrade pip && \
     pip install --no-cache jupyterlab && \
     pip install --no-cache nbconvert && \
     apt-get clean && apt-get update && apt-get install -y \
+    cron \
     pandoc \
     texlive-xetex \ 
     texlive-fonts-recommended \
