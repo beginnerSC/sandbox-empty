@@ -3,7 +3,9 @@ FROM python:3.7-slim
 RUN pip install --no-cache --upgrade pip && \
     pip install --no-cache notebook && \
     pip install --no-cache jupyterlab && \
+    pip install --no-cache nbconvert && \
     apt-get clean && apt-get update && apt-get install -y \
+    pandoc \
     texlive-xetex \ 
     texlive-fonts-recommended \
     texlive-generic-recommended
