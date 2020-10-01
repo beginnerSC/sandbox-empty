@@ -4,7 +4,7 @@ FROM python:3.7-slim
 RUN pip install --no-cache --upgrade pip && \
     pip install --no-cache notebook && \
     pip install --no-cache jupyterlab && \
-    apt-get clean && apt-get update && apt-get install -y \    
+    apt-get clean && apt-get update && apt-get upgrade && apt-get install -y \    
     apt install wget && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \ 
     apt install ./google-chrome-stable_current_amd64.deb
