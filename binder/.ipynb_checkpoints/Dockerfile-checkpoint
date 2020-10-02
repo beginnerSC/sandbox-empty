@@ -1,5 +1,4 @@
-# FROM python:3.7-slim
-FROM jupyter/base-notebook
+FROM python:3.7-slim
 
 # install the notebook package
 RUN pip install --no-cache --upgrade pip && \
