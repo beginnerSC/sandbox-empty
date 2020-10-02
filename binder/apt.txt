@@ -1,4 +1,7 @@
 cron
+vim-tiny
+emacs-nox
+nano
 pandoc
 dvipng
 ghostscript
