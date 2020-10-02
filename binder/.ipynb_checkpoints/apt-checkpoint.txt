@@ -1,15 +1,2 @@
 cron
 vim-tiny
-emacs-nox
-nano
-pandoc
-dvipng
-ghostscript
-texlive-fonts-recommended
-texlive-generic-recommended
-texlive-latex-base
-texlive-latex-extra
-texlive-latex-recommended
-texlive-publishers
-texlive-science
-texlive-xetex
