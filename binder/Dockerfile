@@ -1,14 +1,10 @@
-FROM python:3.7-slim
+# FROM python:3.7-slim
+FROM jupyter/base-notebook
+
 # install the notebook package
-# install chrome https://linuxize.com/post/how-to-install-google-chrome-web-browser-on-ubuntu-18-04/
 RUN pip install --no-cache --upgrade pip && \
     pip install --no-cache notebook && \
     pip install --no-cache jupyterlab && \
-    apt-get clean && apt-get update && apt-get install -y \    
-### 試不出來放棄的 chrome   
-#    apt install wget && \
-#    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \ 
-#    apt install ./google-chrome-stable_current_amd64.deb
     apt-get clean && apt-get update && apt-get install -y \    
     cron \
     vim-tiny \
@@ -18,6 +14,11 @@ RUN pip install --no-cache --upgrade pip && \
     texlive-xetex \ 
     texlive-fonts-recommended \
     texlive-generic-recommended
+### 試不出來放棄的 chrome：install chrome https://linuxize.com/post/how-to-install-google-chrome-web-browser-on-ubuntu-18-04/
+#    apt install wget && \
+#    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \ 
+#    apt install ./google-chrome-stable_current_amd64.deb    
+    
 
 # create user with a home directory
 ARG NB_USER
