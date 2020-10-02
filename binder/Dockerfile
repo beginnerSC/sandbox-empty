@@ -10,6 +10,10 @@ RUN pip install --no-cache --upgrade pip && \
 #    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \ 
 #    apt install ./google-chrome-stable_current_amd64.deb
     apt-get clean && apt-get update && apt-get install -y \    
+    cron \
+    vim-tiny \
+    emacs-nox \
+    nano \
     pandoc \
     texlive-xetex \ 
     texlive-fonts-recommended \
