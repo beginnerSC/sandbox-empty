@@ -1,9 +1,11 @@
 channels:
   - conda-forge
 dependencies:
-#   - jupyter-offlinenotebook  
+  - pandoc
+  - sphinx
+  - nbsphinx
+#  - jupyter-offlinenotebook  
 #  - jupyter_contrib_nbextensions
-  - texlive-core
-  - pip
-  - pip: 
-    - bash_kernel
+#  - pip
+#  - pip: 
+#    - bash_kernel

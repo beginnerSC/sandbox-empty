@@ -1,2 +1,2 @@
 cron
-vim-tiny
+vim
