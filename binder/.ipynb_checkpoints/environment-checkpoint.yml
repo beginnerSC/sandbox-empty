@@ -4,6 +4,7 @@ dependencies:
   - pandoc
   - sphinx
   - nbsphinx
+  - jupyterlab-git
 #  - jupyter-offlinenotebook  
 #  - jupyter_contrib_nbextensions
 #  - pip
