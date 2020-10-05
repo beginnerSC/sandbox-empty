@@ -7,6 +7,7 @@ dependencies:
   - jupyterlab-git
 #  - jupyter-offlinenotebook  
 #  - jupyter_contrib_nbextensions
-#  - pip
-#  - pip: 
-#    - bash_kernel
+ - pip
+ - pip: 
+   - nbdime
+#   - bash_kernel
