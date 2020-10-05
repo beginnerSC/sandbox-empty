@@ -1,3 +1,9 @@
+jupyter serverextension enable --py nbgitpuller --sys-prefix
+
+jupyter labextension install @jupyterlab/git
+jupyter serverextension enable --py jupyterlab_git
+
+
 python -m bash_kernel.install
 jupyter contrib nbextension install --user
 jupyter nbextension enable equation-numbering/main
