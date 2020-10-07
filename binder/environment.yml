@@ -1,10 +1,6 @@
 channels:
   - conda-forge
 dependencies:
-  - pandoc
-  - sphinx
-  - nbsphinx
-  - jupyterlab-git
   - pip
   - pip: 
-    - nbdime
+    - yfinance

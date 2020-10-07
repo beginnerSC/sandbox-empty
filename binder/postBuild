@@ -1,13 +1,6 @@
 jupyter serverextension enable --py nbgitpuller --sys-prefix
 
 
-jupyter labextension install @jupyterlab/git
-
-
-python -m bash_kernel.install
-jupyter contrib nbextension install --user
-jupyter nbextension enable equation-numbering/main
-
 echo '\n# git add commit and push in one command \n' >> .bashrc
 
 echo 'function cnp() {                                                                    ' >> .bashrc
@@ -17,5 +10,3 @@ echo '    git config --global user.email "25188222+beginnerSC@users.noreply.gith
 echo '    git commit -a -m "update"                                                       ' >> .bashrc
 echo '    git push                                                                        ' >> .bashrc
 echo '}                                                                                   ' >> .bashrc
-
-sed -i 's/{article}/{article}\\usepackage{xeCJK}/' $(find ../../.. -name "article.tplx")
