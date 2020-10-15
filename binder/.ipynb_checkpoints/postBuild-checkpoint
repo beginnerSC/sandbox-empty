@@ -1,6 +1,7 @@
 jupyter serverextension enable --py nbgitpuller --sys-prefix
-jupyter labextension install @jupyter-voila/jupyterlab-preview
 jupyter serverextension enable voila --sys-prefix
+jupyter labextension install @jupyter-voila/jupyterlab-preview
+jupyter lab build --minimize=False
 
 echo '\n# git add commit and push in one command \n' >> .bashrc
 
