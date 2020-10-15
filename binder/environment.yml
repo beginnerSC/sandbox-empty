@@ -2,7 +2,5 @@ channels:
     - conda-forge
     - conda-forge/label/prerelease-jupyterlab
 dependencies:
+    - voila
     - nbgitpuller
-    - pip
-    - pip: 
-        - pyttsx3
