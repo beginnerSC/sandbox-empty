@@ -15,4 +15,3 @@ dependencies:
         - ansi2html
         - jupyter-server-proxy
         - jupyter-dash
-        - jupyterlab-dash==0.1.0a3
