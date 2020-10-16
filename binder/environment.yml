@@ -15,3 +15,4 @@ dependencies:
         - ansi2html
         - jupyter-server-proxy
         - jupyter-dash
+        - dash-bootstrap-components
