@@ -4,3 +4,14 @@ channels:
 dependencies:
     - voila
     - nbgitpuller
+    - pip
+    - pip: 
+        - dash
+        - requests
+        - flask
+        - retrying
+        - ipython
+        - ipykernel
+        - ansi2html
+        - jupyter-server-proxy
+        - jupyter-dash

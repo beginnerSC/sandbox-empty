@@ -2,9 +2,16 @@ channels:
     - conda-forge
     - conda-forge/label/prerelease-jupyterlab
 dependencies:
-    - jupyterlab=2
-    - nodejs
-    - notebook=6
-    - ptvsd
-    - xeus-python=0.8.0
+    - voila
     - nbgitpuller
+    - pip
+    - pip: 
+        - dash
+        - requests
+        - flask
+        - retrying
+        - ipython
+        - ipykernel
+        - ansi2html
+        - jupyter-server-proxy
+        - jupyter-dash
