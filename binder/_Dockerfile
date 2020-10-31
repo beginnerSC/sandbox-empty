@@ -1,7 +1,6 @@
 FROM python:3.7-slim
 
 # install the notebook package
-RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
 RUN pip install --no-cache --upgrade pip && \
     pip install --no-cache notebook && \
     pip install --no-cache jupyterlab && \
@@ -14,10 +13,10 @@ RUN pip install --no-cache --upgrade pip && \
 #    texlive-xetex \ 
 #    texlive-fonts-recommended \
 #    texlive-generic-recommended
-### 試不出來放棄的 chrome：install chrome https://linuxize.com/post/how-to-install-google-chrome-web-browser-on-ubuntu-18-04/
-    apt install wget && \
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \ 
-    apt install ./google-chrome-stable_current_amd64.deb    
+### 試不出來再次放棄的 chrome：install chrome https://linuxize.com/post/how-to-install-google-chrome-web-browser-on-ubuntu-18-04/
+#    apt install wget && \
+#    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \ 
+#    apt install ./google-chrome-stable_current_amd64.deb    
     
 
 # create user with a home directory
