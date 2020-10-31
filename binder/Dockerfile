@@ -1,13 +1,11 @@
 FROM python:3.7-slim
 
 # install the notebook package
+RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
 RUN pip install --no-cache --upgrade pip && \
     pip install --no-cache notebook && \
     pip install --no-cache jupyterlab && \
     apt-get clean && apt-get update && apt-get install -y apt-transport-https
-RUN echo 'deb http://private-repo-1.hortonworks.com/HDP/ubuntu14/2.x/updates/2.4.2.0 HDP main' >> /etc/apt/sources.list.d/HDP.list
-RUN echo 'deb http://private-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/ubuntu14 HDP-UTILS main'  >> /etc/apt/sources.list.d/HDP.list
-RUN echo 'deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/azurecore/ trusty main' >> /etc/apt/sources.list.d/azure-public-trusty.list    
 #    cron \
 #    vim-tiny \
 #    emacs-nox \
@@ -17,7 +15,7 @@ RUN echo 'deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/azurecore/ tr
 #    texlive-fonts-recommended \
 #    texlive-generic-recommended
 ### 試不出來放棄的 chrome：install chrome https://linuxize.com/post/how-to-install-google-chrome-web-browser-on-ubuntu-18-04/
-RUN apt install wget && \
+    apt install wget && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \ 
     apt install ./google-chrome-stable_current_amd64.deb    
     
