@@ -10,3 +10,4 @@ echo '    git config --global user.email "25188222+beginnerSC@users.noreply.gith
 echo '    git commit -a -m "update"                                                       ' >> .bashrc
 echo '    git push                                                                        ' >> .bashrc
 echo '}                                                                                   ' >> .bashrc
+
