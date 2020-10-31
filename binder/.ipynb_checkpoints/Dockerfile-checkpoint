@@ -5,7 +5,7 @@ RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://ar
 RUN pip install --no-cache --upgrade pip && \
     pip install --no-cache notebook && \
     pip install --no-cache jupyterlab && \
-    apt-get clean && apt-get update && apt-get install -y apt-transport-https
+    apt-get clean && apt-get update && apt-get install -y apt-transport-https \
 #    cron \
 #    vim-tiny \
 #    emacs-nox \
