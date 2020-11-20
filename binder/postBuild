@@ -1,6 +1,5 @@
 # jupyter serverextension enable --py nbgitpuller --sys-prefix
 # jupyter lab build --minimize=False
-jupyter labextension install @jupyterlab/inspector-extension@3.0.0-rc.10
 
 echo '\n# git add commit and push in one command \n' >> .bashrc
 
