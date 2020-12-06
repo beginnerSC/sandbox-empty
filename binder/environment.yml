@@ -5,4 +5,4 @@ dependencies:
     - nbgitpuller
     - pip
     - pip: 
-        - jupyter-repo2docker
+#        - jupyter-repo2docker
