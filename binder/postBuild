@@ -7,7 +7,7 @@
 # cd ta-lib/
 # ./configure --prefix=/usr
 # make
-# sudo make install
+# sudo make install    # This will fail; postBuild doesn't have root access
 
 
 echo '\n# git add commit and push in one command \n' >> .bashrc
