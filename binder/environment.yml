@@ -6,5 +6,5 @@ dependencies:
     - pip
     - pip: 
         - numpy
-        - TA-Lib
+#         - TA-Lib
         - pandas
